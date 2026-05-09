@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sabor & Casa | Restaurante</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>Sabor & Casa</h1>
+  <p>Comida caseira feita com carinho</p>
+  <a class="btn" href="#cardapio">Ver Cardápio</a>
+</header>
+
+<section id="sobre">
+  <h2>Sobre nós</h2>
+  <p>
+    Somos um restaurante familiar focado em oferecer refeições saborosas,
+    preparadas com ingredientes frescos e atendimento de qualidade.
+  </p>
+</section>
+
+<section id="cardapio">
+  <h2>Cardápio</h2>
+
+  <div class="item" data-id="1" data-preco="22">
+    <div class="DescricaoProduto">
+      <h3>Prato Executivo</h3>
+      <span>R$ 22,00</span>
+      <p>Arroz, feijão, carne, salada e acompanhamento.</p>
+    </div>
+
+    <div>
+      <img src="img/Prato Executivo.jpeg" alt="Prato Executivo" class="ImgProduto">
+    </div>
+
+    <div class="controle">
+      <button class="ButonControle" id="menos"> - </button>
+      <span class="ButonQauntidade" id="quantidade"> 0 </span>
+      <button class="ButonControle" id="mais"> + </button>
+    </div>
+  </div>
+
+
+  <div class="item">
+    <div class="DescricaoProduto">
+      <h3>Strogonoff de Frango</h3>
+      <span>R$ 28,00</span>
+      <p>Acompanha arroz branco e batata palha.</p>
+    </div>
+
+    <div>
+      <img src="img/estrogonofe.jpeg" alt="Prato Executivo" class="ImgProduto">
+    </div>
+
+    <div class="controle">
+      <button class="ButonControle" id=" menos"> - </button>
+      <span class="ButonQauntidade" id=" quantidade"> 0 </span>
+      <button class="ButonControle" id=" mais"> + </button>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="DescricaoProduto">
+      <h3>Lasanha</h3>
+      <span>R$ 30,00</span>
+      <p>Lasanha tradicional à bolonhesa.</p>
+    </div>
+
+    <div>
+      <img src="img/lasanha.jpeg" alt="Prato Executivo" class="ImgProduto">
+    </div>
+
+    <div class="controle">
+      <button class="ButonControle" id="menos"> - </button>
+      <span class="ButonQauntidade" id="quantidade"> 0 </span>
+      <button class="ButonControle" id="mais"> + </button>
+    </div>
+  </div>
+</section>
+
+<section id="contato">
+  <h2>Contato</h2>
+  <p>📍 Rua Exemplo, 123 – Centro</p>
+  <p>⏰ Seg a Sáb – 11h às 22h</p>
+
+  <a class="btn whatsapp" 
+     href="https://wa.me/5599999999999" 
+     target="_blank">
+    Falar no WhatsApp
+  </a>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
