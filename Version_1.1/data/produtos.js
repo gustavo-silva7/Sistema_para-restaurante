@@ -1,3 +1,4 @@
+//ESTRUTURA DO CARDAPIO
 const produtos = [
     {
         id: 1,
@@ -21,14 +22,25 @@ const produtos = [
         preco: 25.73,
         imagem: "img/Prato Executivo.jpeg",
         descricao: "Prato feito"
+    },
+
+      {
+        id: 4,
+        nome: "Bacon Cheeseburguer",
+        preco: 32.93,
+        imagem: "img/hamburguer.jpeg",
+        descricao: "Hamburguer de queijo com bacon"
     }
     
 ];
+const carrinho = [];
 
+const cardapio = document.getElementById("cardapio");
+const carrinhoHTML = document.getElementById("carrinho");
+const totalHTML = document.getElementById("total");
 
-const cardapio =
-document.getElementById("cardapio");
-
+//RENDERIZAÇÃO DO CARDAPIO
+function renderProduto(){
 produtos.forEach((produto) => {
 
   cardapio.innerHTML += `
@@ -54,3 +66,32 @@ produtos.forEach((produto) => {
   `;
 
 });
+} //Fim da função renderProduto
+
+
+//RENDERIZAR ITENS QIE ESTÃO NO CARRINHO
+function renderCarrinho(){
+  carrinhoHTML.innerHTML = "";
+  let total = 0;
+  carrinho.forEach((item) => {
+    total += item.preco * item.quantidade;
+    carrinhoHTML.innerHTML += `
+      <div>
+        <h3>
+          ${item.nome}
+        </h3>
+        <p>
+          Quantidade: ${item.quantidade}
+        </p>
+        <p>
+          Subtotal:
+          R$ ${item.preco * item.quantidade}
+        </p>
+      </div>
+    `;
+  });
+
+  totalHTML.innerText =
+  `Total: R$ ${total}`;
+}
+renderProduto();
