@@ -28,4 +28,3 @@ items.forEach((item) => {
     });
 
 });
-
