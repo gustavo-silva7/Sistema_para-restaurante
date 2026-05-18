@@ -59,10 +59,10 @@ function removerCarrinho(produtoId){
 
 //BOTOES DE ADICIONAR E REMOVER ITENS DO CARRINHO
 const items = document.querySelectorAll(".item");
-let quantidade = 0;
 
 items.forEach((item, index) => {
-
+  
+    let quantidade = 0;
     const ButtonMais = item.querySelector(".ButtonMais");
     const ButtonMenos = item.querySelector(".ButtonMenos");
     const quantidadeHTML = item.querySelector(".quantidade");
