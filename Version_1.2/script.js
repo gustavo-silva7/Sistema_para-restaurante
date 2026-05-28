@@ -1,133 +1,165 @@
-//FUNÇÃO PARA ADICIONAR ITEM AO CARRINHO
-function adicionarCarrinho(produtoId) {
+//Vamos organizar essa bagaça
+//Variavei globais e o estado da aplicação
+const carrinho = [];
+const cardapio = document.getElementById("cardapio");
+const carrinhoHTML = document.getElementById("carrinho");
+const totalHTML = document.getElementById("total");
+const bntFinalizar = document.getElementById("bnt-finalizar")
 
-  const produtoExistente =
-  carrinho.find((item) => {
-    return item.id === produtoId;
+//RENDERIZAR O CARDAPIO DE FORMA DINAMICA
+function renderProduto(){
+  cardapioHTML.innerHTML = "<h3>CARDAPIO</h3>" //Só pra manter o titulo original
 
-  });
+  produtos.forEach((produto) => {
+    cardapio.innerHTML += `
+      <div class="item">
+      <div class="DescricaoProduto">
+        <h3>${produto.nome}</h3>
+        <span>${produto.preco}</span>
+        <p>${produto.descricao}</p>
+      </div>
 
-  if(produtoExistente){
-    produtoExistente.quantidade++;
-  }
+      <div>
+        <img src = "${produto.imagem}" class= "ImgProduto">
+      </div>
 
-  else{
+      <div class="controle">
+        <button class="ButtonMenos"> - </button>
+        <span class="quantidade"> 0 </span>
+        <button class="ButtonMais"> + </button>
+      </div>
+    </div>
+    `});
+    configurarBotoesCardapio() //Os botões só existem após o innerHTML ser preenchido. Por isso, chamamos a configuração dos cliques imediatamente aqui.
+  } //Fim da função renderProduto
 
-    const produto =
-    produtos.find((p) => {
+//CONFIGURAROS EVENTOS DE CLIQUE DOS BOTOES
+function configurarBotoesCardapio(){
+  const itemsDOM = document.querySelectorAll(".item");
 
-      return p.id === produtoId;
+  itemsDOM.forEach((itemDOM) => {
+  // Captura o ID do produto diretamente do atributo HTML correspondente
+    const produtoId = parseInt(itemDOM.getAttribute("data-id"));
+    const btnMais = itemDOM.querySelector(".ButtonMais");
+    const btnMenos = itemDOM.querySelector(".ButtonMenos");
+    const quantidadeHTML = itemDOM.querySelector(".quantidade");
 
+    console.log("Ids capturados com sucesso") //Apenas verificação
+
+    btnMais.addEventListener("click", () => {
+      adicionarCarrinho(produtoId);
+      //mosta o contador visual no site
+      const contadorVisual = carrinho.find(i => i.id === produtoId);
+      quantidadeHTML.innerText = contadorVisual = contadorVisual.quantidade;
     });
 
-    carrinho.push({
+    btnMenos.addEventListener("click", () => {
+      removerCarrinho(produtoId);
+      //mosta o contador visual no site ou zera se foi removido
+      const contadorVisual = carrinho.find(i => i.id === produtoId)
+      quantidadeHTML.innerText = contadorVisual ? contadorVisual.quantidade : 0;
+    });
+  });
+}
 
+
+//FUNÇÃO PARA ADICIONAR ITEM AO CARRINHO
+function adicionarCarrinho(produtoId) {
+  const produtoExistente = corrinho.find(item => item.id === produtoId);
+  if (produtoExistente){
+    produtoExistente.quantidade++
+    
+  }else{
+    const produto = produtos.find(p => pid ===produtoId)
+    carrinho.push({
       id: produto.id,
       nome: produto.nome,
       preco: produto.preco,
       quantidade: 1
-
-    });
-
+    })
   }
-
-  renderCarrinho();
+  console.log("Botao + clicado e produto adicionado")
+  renderCarrinho()
 } //Fim da Funçao adicionarCarrinho
+
 
 //FUNÇAO PARA REMOVER ITENS DO CARRINHO
 function removerCarrinho(produtoId){
+  const produtoExistente = carrinho.find(item => item.id === produtoId);
 
-  const produto =
-  carrinho.find((item) => {
-    return item.id === produtoId;
-  });
+  if (produtoExistente) {
+    produtoExistente.quantidade--;
 
-  if(produto){
-    produto.quantidade--;
-
-    if(produto.quantidade <= 0){
-      const index =
-      carrinho.findIndex((item) => {
-        return item.id === produtoId;
-      });
+    if (produtoExistente.quantidade <= 0) {
+      const index = carrinho.findIndex(item => item.id === produtoId);
       carrinho.splice(index, 1);
     }
   }
-  renderCarrinho();
+  console.log("Botao - clicado e produto removido")
+  renderCarrinho()
 } //Fim da Funçao removerCarrinho
 
 
-//BOTOES DE ADICIONAR E REMOVER ITENS DO CARRINHO
-const items = document.querySelectorAll(".item");
+//RENDERIZAR ITENS QUE ESTÃO NO CARRINHO
+function renderCarrinho(){
+  carrinhoHTML.innerHTML = "";
+  let total = 0;
 
-items.forEach((item, index) => {
-  
-    let quantidade = 0;
-    const ButtonMais = item.querySelector(".ButtonMais");
-    const ButtonMenos = item.querySelector(".ButtonMenos");
-    const quantidadeHTML = item.querySelector(".quantidade");
+  if (carrinho.length === 0 ){
+    carrinhoHTML.innerHTML = "Nenhum item no carrinho ainda.";
+    totalHTML.innerText = "Total: R$ 0,00";
+    btnFinalizar.style.display = "none";
+    return;
+  }
 
+  arrinho.forEach((item) => {
+    const subtotal = item.preco * item.quantidade;
+    total += subtotal;
+    
+    carrinhoHTML.innerHTML += `
+      <div class="item-carrinho">
+        <h3>${item.nome}</h3>
+        <p>Quantidade: ${item.quantidade}</p>
+        <p>Subtotal: R$ ${subtotal.toFixed(2)}</p>
+      </div>
+    `;
+  });
 
-    ButtonMais.addEventListener("click", () => {
-        quantidade ++,
-        quantidadeHTML.innerText = quantidade;
-        console.log("Botao mais clicado!");
+  totalHTML.innerText = `Total: R$ ${total.toFixed(2)}`;
+  btnFinalizar.style.display = "block"; // Exibe o botão quando há itens
+}
 
-        adicionarCarrinho(
-            produtos[index].id,
-            console.log("produto adicionado")     
-        )
-        });
-
-    ButtonMenos.addEventListener("click", () => {
-        if(quantidade > 0){
-            quantidade--;
-            quantidadeHTML.innerText = quantidade;
-            console.log("Botao menos clicado!");
-
-            removerCarrinho(
-                produtos[index].id,
-                console.log("item removido")
-            );
-        }
-    });
-});
-
-
+// A partir desse ponto eu não mais oq vou
 // Evento do botão de finalizar compra
-document.getElementById("btn-finalizar").addEventListener("click", async () => {
+btnFinalizar.addEventListener("click", async () => {
   if (carrinho.length === 0) return alert("Seu carrinho está vazio!");
 
-  // Desativa o botão temporariamente para evitar cliques duplos
-  const btn = document.getElementById("btn-finalizar");
-  btn.innerText = "Processando...";
-  btn.disabled = true;
+  btnFinalizar.innerText = "Processando...";
+  btnFinalizar.disabled = true;
 
   try {
-    // Enviando o carrinho para o nosso servidor Back-end
     const response = await fetch('http://localhost:3000/api/criar-checkout', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ carrinho: carrinho })
     });
 
     const dados = await response.json();
 
     if (dados.init_point) {
-      // Redireciona o cliente para a página de pagamento segura (ex: Mercado Pago)
       window.location.href = dados.init_point;
     } else {
       alert("Houve um erro ao gerar o link de pagamento.");
-      btn.innerText = "Finalizar e Pagar no Site";
-      btn.disabled = false;
+      btnFinalizar.innerText = "Finalizar e Pagar no Site";
+      btnFinalizar.disabled = false;
     }
-
   } catch (error) {
     console.error("Erro na requisição:", error);
     alert("Não foi possível conectar ao servidor de pagamento.");
-    btn.innerText = "Finalizar e Pagar no Site";
-    btn.disabled = false;
+    btnFinalizar.innerText = "Finalizar e Pagar no Site";
+    btnFinalizar.disabled = false;
   }
 });
+
+// INICIALIZAÇÃO AUTOMÁTICA DO SISTEMA
+renderProduto();
