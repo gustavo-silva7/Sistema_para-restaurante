@@ -4,25 +4,23 @@ const carrinho = [];
 const cardapio = document.getElementById("cardapio");
 const carrinhoHTML = document.getElementById("carrinho");
 const totalHTML = document.getElementById("total");
-const bntFinalizar = document.getElementById("bnt-finalizar")
+const btnFinalizar = document.getElementById("btn-finalizar")
 
 //RENDERIZAR O CARDAPIO DE FORMA DINAMICA
 function renderProduto(){
-  cardapioHTML.innerHTML = "<h3>CARDAPIO</h3>" //Só pra manter o titulo original
+  cardapio.innerHTML = "<h3>CARDAPIO</h3>" //Só pra manter o titulo original
 
   produtos.forEach((produto) => {
     cardapio.innerHTML += `
-      <div class="item">
+      <div class="item" data-id="${produto.id}">
       <div class="DescricaoProduto">
         <h3>${produto.nome}</h3>
-        <span>${produto.preco}</span>
+        <span>${produto.preco.toFixed(2)}</span>
         <p>${produto.descricao}</p>
       </div>
-
       <div>
-        <img src = "${produto.imagem}" class= "ImgProduto">
+        <img src = "${produto.imagem}" class= "ImgProduto" alt=${produto.nome}>
       </div>
-
       <div class="controle">
         <button class="ButtonMenos"> - </button>
         <span class="quantidade"> 0 </span>
@@ -49,34 +47,34 @@ function configurarBotoesCardapio(){
     btnMais.addEventListener("click", () => {
       adicionarCarrinho(produtoId);
       //mosta o contador visual no site
-      const contadorVisual = carrinho.find(i => i.id === produtoId);
-      quantidadeHTML.innerText = contadorVisual = contadorVisual.quantidade;
+      const itemNoCarrinho = carrinho.find(i => i.id === produtoId);
+      quantidadeHTML.innerText = itemNoCarrinho ? itemNoCarrinho.quantidade : 0
     });
 
     btnMenos.addEventListener("click", () => {
       removerCarrinho(produtoId);
       //mosta o contador visual no site ou zera se foi removido
-      const contadorVisual = carrinho.find(i => i.id === produtoId)
-      quantidadeHTML.innerText = contadorVisual ? contadorVisual.quantidade : 0;
+      const itemNoCarrinho= carrinho.find(i => i.id === produtoId)
+      quantidadeHTML.innerText = itemNoCarrinho ? itemNoCarrinho.quantidade : 0;
     });
   });
 }
 
-
 //FUNÇÃO PARA ADICIONAR ITEM AO CARRINHO
 function adicionarCarrinho(produtoId) {
-  const produtoExistente = corrinho.find(item => item.id === produtoId);
+  const produtoExistente = carrinho.find(item => item.id === produtoId);
   if (produtoExistente){
     produtoExistente.quantidade++
-    
   }else{
-    const produto = produtos.find(p => pid ===produtoId)
-    carrinho.push({
-      id: produto.id,
-      nome: produto.nome,
-      preco: produto.preco,
-      quantidade: 1
-    })
+    const produto = produtos.find(p => p.id === produtoId)
+    if (produto){
+      carrinho.push({
+        id: produto.id,
+        nome: produto.nome,
+        preco: produto.preco,
+        quantidade: 1
+      })
+    }
   }
   console.log("Botao + clicado e produto adicionado")
   renderCarrinho()
@@ -112,7 +110,7 @@ function renderCarrinho(){
     return;
   }
 
-  arrinho.forEach((item) => {
+  carrinho.forEach((item) => {
     const subtotal = item.preco * item.quantidade;
     total += subtotal;
     
