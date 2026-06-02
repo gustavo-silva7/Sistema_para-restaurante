@@ -148,7 +148,7 @@ btnFinalizar.addEventListener("click", async () => {
       window.location.href = dados.init_point;
     } else {
       alert("Houve um erro ao gerar o link de pagamento.");
-      btnFinalizar.innerText = "Finalizar e Pagar no Site";
+      btnFinalizar.innerText = "Finalizar";
       btnFinalizar.disabled = false;
     }
   } catch (error) {
